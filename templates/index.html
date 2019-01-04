@@ -2,7 +2,7 @@
 {% block content %}
     <h1>{{forecast['location']}}</h1>
     <p>It's {{forecast['temperature']}}&#176;C.<br>{{forecast['weather'].capitalize()}}.</p>
-    <img src="http://openweathermap.org/img/w/{{forecast['icon']}}.png" alt="">
+    <img src="https://openweathermap.org/img/w/{{forecast['icon']}}.png" alt="">
     <p>The temperature today will be between {{forecast['min']}}&#176;C and {{forecast['max']}}&#176;C.</p>
     <p>Today the sun will be up between {{forecast['sunrise']}} and {{forecast['sunset']}}</p>
 {% endblock %}
