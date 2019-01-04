@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}} | Weather app</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/screen.css') }}">
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}" rel="bookmark">Home</a></li>
+            <li><a href="{{ url_for('change') }}" rel="bookmark">Change location</a></li>
+            <li><a href="{{ url_for('about') }}" rel="bookmark">About</a></li>
+        </ul>
+    </nav>
+</body>
+</html>
