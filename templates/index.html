@@ -15,7 +15,7 @@
 	{% if forecast == 404: %}
 	    <p>Never heard of {{wrong_location.title()}}. Sure you spelled it correctly?</p>
 	{% endif %}
-	<form method="POST" action="/">
+	<form method="POST" action="/weather">
 	    <label for="location">Where?</label>
 	    <input type="text" id="location" name="location" required="required">
 	    <button type="submit" id="submit" name="submit">Show me the weather</button>
