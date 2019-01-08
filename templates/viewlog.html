@@ -1,27 +1,32 @@
 {% extends "layout.html" %}
 {% block content %}
+
     <h1>{{title}}</h1>
-    {% if contents: %}
-    
+
+	{% if contents: %}
 	    <table>
-			<tr>
-				<th>Where</th>
-				<th>Day</th>
-				<th>Time</th>
-				<th>Temperature</th>
-				<th>Forecast</th>
-			</tr>
-			{% for row in contents %}
+			<thead>
 				<tr>
-					{% for column in row %}
-						<td>{{column}}</td>
-					{% endfor %}
-					<td></td>
+					<th>Where</th>
+					<th>Day</th>
+					<th>Time</th>
+					<th>Temperature</th>
+					<th>Forecast</th>
 				</tr>
-			{% endfor %}
+			</thead>
+			<tbody>
+				{% for row in contents %}
+					<tr>
+						{% for column in row %}
+							<td>{{column}}</td>
+						{% endfor %}
+					</tr>
+				{% endfor %}
+			</tbody>
 		</table>
 	
 	{% else: %}
 		<p>No logs have been created yet. <a href="{{ url_for('index') }}" rel="bookmark">Change location</a> to start the log.</p>
 	{% endif %}
+
 {% endblock %}

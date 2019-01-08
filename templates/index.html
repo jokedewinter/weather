@@ -2,15 +2,15 @@
 {% block content %}
 
 	<h1>Choose a location</h1>
-	<ul>
-		<li><a href="{{ url_for('the_weather') }}?location=Loughborough">Loughborough</a></li>
-		<li><a href="{{ url_for('the_weather') }}?location=London">London</a></li>
-		<li><a href="{{ url_for('the_weather') }}?location=New York">New York</a></li>
-		<li><a href="{{ url_for('the_weather') }}?location=Zermatt">Zermatt</a></li>
-		<li><a href="{{ url_for('the_weather') }}?location=Brussels">Brussels</a></li>
-		<li><a href="{{ url_for('the_weather') }}?location=Milwaukee">Milwaukee</a></li>
-	</ul>
-	
+	<div class="locations">
+		<a href="{{ url_for('the_weather') }}?location=Loughborough">Loughborough</a>
+		<a href="{{ url_for('the_weather') }}?location=London">London</a>
+		<a href="{{ url_for('the_weather') }}?location=New York">New York</a>
+		<a href="{{ url_for('the_weather') }}?location=Zermatt">Zermatt</a>
+		<a href="{{ url_for('the_weather') }}?location=Brussels">Brussels</a>
+		<a href="{{ url_for('the_weather') }}?location=Milwaukee">Milwaukee</a>
+	</div>
+
 	<h2>Or somewhere else?</h2>
 	{% if forecast == 404: %}
 	    <p>Never heard of {{wrong_location.title()}}. Sure you spelled it correctly?</p>
