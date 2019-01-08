@@ -16,11 +16,11 @@
 	    <p>Never heard of {{wrong_location.title()}}. Sure you spelled it correctly?</p>
 	{% endif %}
 	<form method="POST" action="/weather">
-	    <label for="location">Where?</label>
+		<label for="location">Village, town, city <small>Include the country code if you want to be specific. <span>Eg. <code>Manchester, UK</code></span></small></label>
 	    <input type="text" id="location" name="location" required="required">
 	    <button type="submit" id="submit" name="submit">Show me the weather</button>
 	</form>
 
-	<p><a href="{{ url_for('the_weather') }}?location=geo">By IP <small>The one where this app lives</small></a></p>
+	<h3><a href="{{ url_for('the_weather') }}?location=geo">Or by IP <small>The one where this app lives</small></a></h3>
 	
 {% endblock %}
