@@ -11,7 +11,7 @@ app = Flask(__name__)
 # Pages
 # -------------------------------------------------------
 
-@app.route("/", methods=["POST"])
+@app.route("/", methods=["GET", "POST"])
 def index():
     from engine import Location
 
