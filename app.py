@@ -2,9 +2,8 @@
 # -------------------------------------------------------
 # App setup
 # -------------------------------------------------------
-from flask import Flask, render_template, request, escape
+from flask import Flask, render_template, request
 app = Flask(__name__)
-
 
 
 # -------------------------------------------------------
@@ -22,22 +21,22 @@ def log_file_exists(path):
     return True
 
 
-def log_request(request, where, forecast):
+def log_request(where, forecast):
     """
     Log the location requests and write them to a log file
     """
     from time import gmtime, strftime
     current_day = strftime("%d/%m/%Y", gmtime())
-    current_time = strftime("%H:%M:%S", gmtime())
+    current_time = strftime("%H:%M", gmtime())
 
     with open('locations.log', 'a') as log:
-        #print(request.remote_addr, file=log) # IP address
-        #print(request.user_agent, file=log) # User agent
-        #print(where.title(), current, forecast, file=log, sep=' | ')
+        # print(request.remote_addr, file=log) # IP address
+        # print(request.user_agent, file=log) # User agent
+        # print(where.title(), current, forecast, file=log, sep=' | ')
 
         temperature = str(forecast['temperature']) + '&#176;C'
         weather = forecast['weather']
-        print(where.title(), current_day, current_time, temperature, weather, file=log, sep=' | ')
+        print(where.title(), current_day, current_time, temperature, weather.title(), file=log, sep=' | ')
 
 
 # -------------------------------------------------------
@@ -45,51 +44,50 @@ def log_request(request, where, forecast):
 # -------------------------------------------------------
 @app.route("/")
 def index():
-	return render_template("index.html", title="Home", **locals())
-
+    return render_template("index.html", title="Home", **locals())
 
 
 @app.route("/weather", methods=["GET", "POST"])
 def the_weather():
-	from engine import Location
+    from engine import Location
 
-	"""
-	The location is coming from the form
-	The location is coming from the GET parameter in the URL
-	"""
-	if request.method == "POST":
-		form_data = request.form
-		where = Location(form_data["location"])
-		forecast = where.get_location_data()
+    """
+    The location is coming from the form
+    The location is coming from the GET parameter in the URL
+    """
+    if request.method == "POST":
+        form_data = request.form
+        where = Location(form_data["location"])
+        forecast = where.get_location_data()
 
-		if ( forecast == 404 ) or ( len(forecast) < 0 ):
-			wrong_location = form_data["location"]
-			return render_template("index.html", title="Change location", **locals())
+        if (forecast == 404) or (len(forecast) < 0):
+            wrong_location = form_data["location"]
+            return render_template("index.html", title="Change location", **locals())
 
-		else:
-			log_request(request, form_data["location"], forecast)
+        else:
+            log_request(form_data["location"], forecast)
 
-	else:
-		get_data = request.args.get('location', type=str)
-		if "geo" == get_data:
-			import geocoder
-			g = geocoder.ip('me')
+    else:
+        get_data = request.args.get('location', type=str)
+        if "geo" == get_data:
+            import geocoder
+            g = geocoder.ip('me')
 
-			if g.ok:
-				where = Location('', g.latlng[0], g.latlng[1])
-				forecast = where.get_ip_data()
-			else:
-				wrong_location = request.remote_addr
-				return render_template("index.html", title="Change location", **locals())
+            if g.ok:
+                where = Location('', g.latlng[0], g.latlng[1])
+                forecast = where.get_ip_data()
+            else:
+                wrong_location = request.remote_addr
+                return render_template("index.html", title="Change location", **locals())
 
-		else:
-			where = Location(get_data)
-			forecast = where.get_location_data()
+        else:
+             where = Location(get_data)
+             forecast = where.get_location_data()
 
-	"""
-	Render the template. Beware of a 404 return on the forecast.
-	"""
-	return render_template("weather.html", title="Weather", **locals())
+    """
+    Render the template. Beware of a 404 return on the forecast.
+    """
+    return render_template("weather.html", title="Weather", **locals())
 
 
 @app.route("/change")
@@ -108,7 +106,7 @@ def view_log():
     if log_file_exists('locations.log') :
 
         with open('locations.log') as log:
-            #contents = log.read()
+            # contents = log.read()
             for line in log:
                 contents.append([])
                 for item in line.split('|'):
@@ -122,11 +120,10 @@ def about():
     return render_template("about.html", title="About", **locals())
 
 
-
-
 # -------------------------------------------------------
 # The execution
 # -------------------------------------------------------
 
 if __name__ == "__main__":
     app.run(debug=True)
+

@@ -3,12 +3,12 @@
 # Classes and Functions
 # -------------------------------------------------------
 
+
 class Location():
     def __init__(self, location, lat=0, lon=0):
         self.location = location
         self.lat = lat
         self.lon = lon
-
 
     def get_location_data(self):
         import requests
@@ -21,7 +21,6 @@ class Location():
         else:
             return response.status_code
 
-
     def get_ip_data(self):
         import requests
         endpoint = "https://api.openweathermap.org/data/2.5/weather"
@@ -29,7 +28,6 @@ class Location():
         response = requests.get(endpoint, params=payload)
         data = response.json()
         return self.fetch_weather(data)
-
 
     def fetch_weather(self, data):
         forecast = dict()
@@ -49,7 +47,6 @@ class Location():
         forecast['sunset'] = datetime.fromtimestamp(int(sunset)).strftime('%H:%M')
 
         return forecast
-
 
     def convert_weather(self, description):
         """
