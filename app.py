@@ -8,12 +8,24 @@ app = Flask(__name__)
 
 
 # -------------------------------------------------------
-# Pages
+# Functions
 # -------------------------------------------------------
+def log_file_exists(path):
+	"""
+    Check if the log file exists and can be openend
+	"""
+	try:
+		f = open(path)
+		f.close()
+	except IOError:
+		return False
+	return True
 
 
-# Log the location requests and write them to a log file
 def log_request(request, where, forecast):
+	"""
+	Log the location requests and write them to a log file
+	"""
 	from time import gmtime, strftime
 	current = strftime("%d/%m/%Y %H:%M:%S", gmtime())
 
@@ -27,7 +39,9 @@ def log_request(request, where, forecast):
 		print(where.title(), current, temperature, weather, file=log, sep=' | ')
 		
 
-
+# -------------------------------------------------------
+# Pages
+# -------------------------------------------------------
 @app.route("/", methods=["GET", "POST"])
 def index():
     from engine import Location
@@ -50,6 +64,7 @@ def index():
         wrong_location = form_data["location"]
         return render_template("change.html", title="Change location", **locals())
 
+
 @app.route("/change")
 def change():
     return render_template("change.html", title="Change location", **locals())
@@ -62,12 +77,16 @@ def view_log():
 	"""
 	import html
 	contents = []
-	with open('locations.log') as log:
-		#contents = log.read()
-		for line in log:
-			contents.append([])
-			for item in line.split('|'):
-				contents[-1].append(html.unescape(item))
+	
+	if log_file_exists('locations.log') :
+	
+		with open('locations.log') as log:
+			#contents = log.read()
+			for line in log:
+				contents.append([])
+				for item in line.split('|'):
+					contents[-1].append(html.unescape(item))
+	
 	return render_template("viewlog.html", title="Logs", contents=contents)
 	
 
