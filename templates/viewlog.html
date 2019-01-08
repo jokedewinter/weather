@@ -7,6 +7,8 @@
 			<tr>
 				<th>Where</th>
 				<th>Day</th>
+				<th>Time</th>
+				<th>Temperature</th>
 				<th>Forecast</th>
 			</tr>
 			{% for row in contents %}
@@ -20,6 +22,6 @@
 		</table>
 	
 	{% else: %}
-		<p>No logs have been created yet. <a href="{{ url_for('change') }}" rel="bookmark">Change location</a> to start the log.</p>
+		<p>No logs have been created yet. <a href="{{ url_for('index') }}" rel="bookmark">Change location</a> to start the log.</p>
 	{% endif %}
 {% endblock %}

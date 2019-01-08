@@ -27,7 +27,8 @@ def log_request(request, where, forecast):
     Log the location requests and write them to a log file
     """
     from time import gmtime, strftime
-    current = strftime("%d/%m/%Y %H:%M:%S", gmtime())
+    current_day = strftime("%d/%m/%Y", gmtime())
+    current_time = strftime("%H:%M:%S", gmtime())
 
     with open('locations.log', 'a') as log:
         #print(request.remote_addr, file=log) # IP address
@@ -36,7 +37,7 @@ def log_request(request, where, forecast):
 
         temperature = str(forecast['temperature']) + '&#176;C'
         weather = forecast['weather']
-        print(where.title(), current, temperature, weather, file=log, sep=' | ')
+        print(where.title(), current_day, current_time, temperature, weather, file=log, sep=' | ')
 
 
 # -------------------------------------------------------
