@@ -50,11 +50,11 @@ def index():
     if form_data:
         where = Location(form_data["location"])
         forecast = where.get_location_data()
-        log_request(request, form_data["location"], forecast)
 
-        if (forecast == 404) and (len(forecast) < 0):
+        if (forecast == 404) or (len(forecast) < 0):
             wrong_location = form_data["location"]
             return render_template("change.html", title="Change location", **locals())
+        log_request(request, form_data["location"], forecast)
 
     else:
         import geocoder
@@ -62,6 +62,10 @@ def index():
         if g.ok:
             where = Location('', g.latlng[0], g.latlng[1])
             forecast = where.get_ip_data()
+
+        else:
+            wrong_location = 'IP error'
+            return render_template("change.html", title="Change location", **locals())
 
 
     return render_template("index.html", title="Home", **locals())
