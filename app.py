@@ -57,6 +57,9 @@ def change():
 
 @app.route("/viewlog")
 def view_log():
+	"""
+	The import html is needed to unescape the HTML character for degrees.
+	"""
 	import html
 	contents = []
 	with open('locations.log') as log:
