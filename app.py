@@ -42,28 +42,49 @@ def log_request(request, where, forecast):
 # -------------------------------------------------------
 # Pages
 # -------------------------------------------------------
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def index():
-    from engine import Location
+	return render_template("index.html", title="Home", **locals())
 
-    form_data = request.form
-    if form_data:
-        where = Location(form_data["location"])
-        forecast = where.get_location_data()
-        log_request(request, form_data["location"], forecast)
-    else:
-        import geocoder
-        g = geocoder.ip('me')
-        if g.ok:
-            where = Location('', g.latlng[0], g.latlng[1])
-            forecast = where.get_ip_data()
 
-    if forecast != 404:
-        return render_template("index.html", title="Home", **locals())
-    else:
-        wrong_location = form_data["location"]
-        return render_template("change.html", title="Change location", **locals())
 
+@app.route("/weather", methods=["GET", "POST"])
+def the_weather():
+	from engine import Location
+
+	"""
+	The location is coming from the form
+	The location is coming from the GET parameter in the URL
+	"""
+	if request.method == "POST":
+		form_data = request.form
+		where = Location(form_data["location"])
+		forecast = where.get_location_data()
+		log_request(request, form_data["location"], forecast)
+
+	else:
+		get_data = request.args.get('location', type=str)
+		if "geo" == get_data:
+			import geocoder
+			g = geocoder.ip('me')
+			if g.ok:
+				where = Location('', g.latlng[0], g.latlng[1])
+				forecast = where.get_ip_data()
+
+		else:
+			where = Location(get_data)
+			forecast = where.get_location_data()
+
+	"""
+	Render the template. Beware of a 404 return on the forecast.
+	"""
+	if forecast != 404:
+		return render_template("weather.html", title="Weather", **locals())
+
+	else:
+		wrong_location = form_data["location"]
+		return render_template("change.html", title="Change location", **locals())
+	
 
 @app.route("/change")
 def change():
