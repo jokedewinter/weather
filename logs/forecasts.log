@@ -1,0 +1,4 @@
+<Request 'http://127.0.0.1:5000/' [POST]> {'temperature': 6, 'location': 'London', 'weather': 'clear', 'icon': '01d', 'min': 5, 'max': 7, 'sunrise': '08:04', 'sunset': '16:10'}
+<Request 'http://127.0.0.1:5000/' [POST]> {'temperature': 7, 'location': 'Brussels', 'weather': 'light intensity shower rain', 'icon': '09d', 'min': 6, 'max': 8, 'sunrise': '07:43', 'sunset': '15:55'}
+<engine.Location object at 0x10ffc7208> {'temperature': 7, 'location': 'Brussels', 'weather': 'light intensity shower rain', 'icon': '09d', 'min': 6, 'max': 8, 'sunrise': '07:43', 'sunset': '15:55'}
+brussels {'temperature': 7, 'location': 'Brussels', 'weather': 'light intensity shower rain', 'icon': '09d', 'min': 6, 'max': 8, 'sunrise': '07:43', 'sunset': '15:55'}
