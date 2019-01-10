@@ -8,31 +8,25 @@ body {
     line-height: 1.5;
 }
 
-
 a {
     text-decoration: none;
     color: #333;
 }
 
-p a {
-    font-weight: bold;
-}
+p a { font-weight: bold; }
+p { max-width: 500px; }
 
 small {
     display: block;
     font-weight: 400;
 }
 
-span {
-    display: block;
-}
+span { display: block; }
 
 /* Location buttons
  * ------------------------------------------------------------- */
 
-.locations {
-    margin-bottom: 2em;
-}
+.locations { margin-bottom: 2em; }
 
 .locations a {
     margin: 0 1em 0 0;
@@ -66,9 +60,7 @@ button {
 	letter-spacing: 2px;
 }
 
-form {
-    margin-bottom: 2em;
-}
+form { margin-bottom: 2em; }
 
 /* Nav
  * ------------------------------------------------------------- */
@@ -125,29 +117,25 @@ th {
 	letter-spacing: 2px;
 }
 
-td {
-	border-top: 1px solid #ccc;
-}
+td { border-top: 1px solid #ccc; }
 
 /*
 An effort to make a table responsive.
 Need to exclude the calendar widget from this because otherwise it will end up looking terrible
 */
 @media screen and ( max-width: 599px ) {
+	th,
+	td {
+		width: 100%;
+		display: block;
+	}
 
+	td { border-top: none; }
 
-		th,
-		td {
-			width: 100%;
-			display: block;
-		}
-
-		td { border-top: none; }
-
-		tr {
-			float: left;
-			width: 100%;
-			display: block;
-			border-bottom: 3px solid #ccc;
-		}
+	tr {
+		float: left;
+		width: 100%;
+		display: block;
+		border-bottom: 3px solid #ccc;
+	}
 }
