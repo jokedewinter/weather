@@ -3,40 +3,8 @@
 # App setup
 # -------------------------------------------------------
 from flask import Flask, render_template, request
+from engine import *
 app = Flask(__name__)
-
-
-# -------------------------------------------------------
-# Functions
-# -------------------------------------------------------
-def log_file_exists(path):
-    """
-    Check if the log file exists and can be openend
-    """
-    try:
-        f = open(path)
-        f.close()
-    except IOError:
-        return False
-    return True
-
-
-def log_request(where, forecast):
-    """
-    Log the location requests and write them to a log file
-    """
-    from time import gmtime, strftime
-    current_day = strftime("%d/%m/%Y", gmtime())
-    current_time = strftime("%H:%M", gmtime())
-
-    with open('locations.log', 'a') as log:
-        # print(request.remote_addr, file=log) # IP address
-        # print(request.user_agent, file=log) # User agent
-        # print(where.title(), current, forecast, file=log, sep=' | ')
-
-        temperature = str(forecast['temperature']) + '&#176;C'
-        weather = forecast['weather']
-        print(where.title(), current_day, current_time, temperature, weather.title(), file=log, sep=' | ')
 
 
 # -------------------------------------------------------
@@ -49,8 +17,6 @@ def index():
 
 @app.route("/weather", methods=["GET", "POST"])
 def the_weather():
-    from engine import Location
-
     """
     The location is coming from the form
     The location is coming from the GET parameter in the URL
@@ -63,9 +29,6 @@ def the_weather():
         if (forecast == 404) or (len(forecast) < 0):
             wrong_location = form_data["location"]
             return render_template("index.html", title="Change location", **locals())
-
-        else:
-            log_request(form_data["location"], forecast)
 
     else:
         get_data = request.args.get('location', type=str)
@@ -87,6 +50,7 @@ def the_weather():
     """
     Render the template. Beware of a 404 return on the forecast.
     """
+    log_request(forecast)
     return render_template("weather.html", title="Weather", **locals())
 
 
@@ -103,14 +67,18 @@ def view_log():
     import html
     contents = []
 
-    if log_file_exists('locations.log') :
+    if log_file_exists('locations.log'):
+        for line in reversed(list(open('locations.log'))):
+            contents.append([])
+            for item in line.split('|'):
+                contents[-1].append(html.unescape(item))
 
-        with open('locations.log') as log:
-            # contents = log.read()
-            for line in log:
-                contents.append([])
-                for item in line.split('|'):
-                    contents[-1].append(html.unescape(item))
+        # with open('locations.log') as log:
+        #     # contents = log.read()
+        #     for line in log:
+        #         contents.append([])
+        #         for item in line.split('|'):
+        #             contents[-1].append(html.unescape(item))
 
     return render_template("viewlog.html", title="Logs", contents=contents)
 
