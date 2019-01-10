@@ -103,3 +103,37 @@ def log_request(forecast):
         weather = forecast['weather']
         print(location.title(), current_day, current_time, temperature, weather.title(), file=log, sep=' | ')
 
+
+"""
+{
+'coord': {
+    'lon': 7.75, 
+    'lat': 46.02}, 
+'weather': [{
+    'id': 800, 
+    'main': 'Clear', 
+    'description': 'clear sky', 
+    'icon': '01n'}], 
+'base': 'stations', 
+'main': {
+    'temp': -15.4, 
+    'pressure': 787.69, 
+    'humidity': 82, 
+    'temp_min': -15.4, 
+    'temp_max': -15.4, 
+    'sea_level': 1035.63, 
+    'grnd_level': 787.69}, 
+'wind': {
+    'speed': 0.5, 
+    'deg': 28.0002}, 
+'clouds': {'all': 0}, 
+'dt': 1547155620, 
+'sys': {
+    'message': 0.0268, 
+    'country': 'CH', 
+    'sunrise': 1547104154, 
+    'sunset': 1547136274}, 
+'id': 2657928, 
+'name': 'Zermatt', 
+'cod': 200}
+"""
